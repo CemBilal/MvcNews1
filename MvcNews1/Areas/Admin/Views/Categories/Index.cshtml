@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Category>
+
+@{
+    Layout = null;
+}
+    <link href="~/lib/startbootstrap-sb-admin/dist/css/styles.css" rel="stylesheet" />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+
+<div class="border text-end p-2" >
+  <a class="btn btn-primary "    asp-action="Create">Ekle</a>
+</div>
+
+<table class="table table-bordered">
+   <thead>
+       <tr>
+           <th> Kategori Adi</th>
+           <th> Etkin</th>
+           <th></th>
+
+       </tr>
+   </thead>
+   <tbody>
+       @foreach (var item in Model )
+       {
+           <tr>
+               <td>@item.Name
+               <div class="text-secondary small">
+                   Haber Sayisi:@item.Posts.Count 
+               </div>
+               </td>
+               <td>@if(item.Enabled)
+                    {
+                        <i class="fa fa-check text-success" ></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-times text-danger"></i>
+                    }
+               </td>
+               <td>
+                   <a class="btn btn-link" asp-action="Edit" asp-route-id="@item.Id">
+                       <i class="fa fa-edit"></i>
+                   </a>
+               
+                   <a class="btn btn-link btn-delete" asp-action="Delete" asp-route-id="@item.Id">
+                       <i class="fa fa-trash"></i>
+                   </a>
+               </td>
+           </tr>
+       }
+   </tbody>
+</table>
+
+
+      
+@section Scripts{
+    <script>
+        $(()=>{
+            $('.btn-delete').click((evt)=>{
+                Swal.fire({
+  icon='warning',
+  title: 'Uyari',
+  html:'Bu kayit silinecek.Devam etmek ister misin?'
+  showCancelButton: true,
+  confirmButtonText: 'Sil',
+  cancelButtonText: `Vazgec`,
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.value) {
+     window. location=$(evt.currentTarget).attr('href');
+  }
+    
+});
+return false;
+
+            })
+        });
+    </script>    
+}        
+
+    
+
+
+  
+  
